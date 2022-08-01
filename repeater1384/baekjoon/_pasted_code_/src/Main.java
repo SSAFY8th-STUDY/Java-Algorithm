@@ -1,67 +1,51 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	static int[][] matrix;
-	static int[] dx = { 0, 1, 0, -1 };
-	static int[] dy = { -1, 0, 1, 0 };
 
-	public static void main(String[] args) {
+	static int MOD = 1000000007;
+	static int MAX_SIZE = 4000001;
+	static int[] fac;
 
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		matrix = new int[N + 2][N + 2];
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		for (int i = 1; i <= N; i++) {
-			String temp = sc.next();
-			for (int j = 1; j <= N; j++) {
-				matrix[i][j] = temp.charAt(j - 1) - '0';
-			}
+		fac = new int[MAX_SIZE];
+		fac[0] = 1;
+		for (int i = 1; i < MAX_SIZE; i++) {
+			fac[i] = (int) (((long) fac[i - 1] * i) % MOD);
 		}
 
-		ArrayList<Integer> answer = new ArrayList<>();
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= N; j++) {
-				if (matrix[i][j] == 1) {
-					answer.add(bfs(j, i, 0));
-				}
-			}
+		int M = Integer.parseInt(br.readLine());
+		while (M-- > 0) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+
+			int N = Integer.parseInt(st.nextToken());
+			int K = Integer.parseInt(st.nextToken());
+
+			long A = fac[N];
+			long B = (long) fac[K] * fac[N - K] % MOD;
+
+			System.out.println(A * fast_pow(B, MOD - 2) % MOD);
 		}
-		Collections.sort(answer);
-		System.out.println(answer.size());
-		for (int a : answer)
-			System.out.println(a);
-		
-		sc.close();
+		br.close();
 	}
 
-	static int bfs(int sx, int sy, int size) {
-		Queue<int[]> queue = new LinkedList<>();
+	public static long fast_pow(long base, long exp) {
+		long result = 1;
 
-		queue.add(new int[] { sx, sy });
-		matrix[sy][sx] = 0;
-
-		while (!queue.isEmpty()) {
-			int[] cur = queue.poll();
-			size++;
-			int cx = cur[0];
-			int cy = cur[1];
-
-			for (int i = 0; i < 4; i++) {
-				int nx = cx + dx[i];
-				int ny = cy + dy[i];
-				if (matrix[ny][nx] == 1) {
-					queue.add(new int[] { nx, ny });
-					matrix[ny][nx] = 0;
-				}
+		while (exp > 0) {
+			if (exp % 2 == 1) {
+				result *= base;
+				result %= MOD;
 			}
+			base = (base * base) % MOD;
+			exp /= 2;
 		}
 
-		return size;
+		return result;
 	}
 
 }
