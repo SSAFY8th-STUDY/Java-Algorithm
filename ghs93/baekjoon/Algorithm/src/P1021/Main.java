@@ -6,8 +6,13 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+/**
+ * 백준 1021. 회전하는 큐 - 실버 4
+ * @author hoseong
+ * @category 자료구조, 덱
+ */
 public class Main {
-	static Deque<Integer> queue = new LinkedList<>();
+	static Deque<Integer> queue = new LinkedList<>(); //덱 사용
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +21,7 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken()); //큐의 크기
 		int M = Integer.parseInt(st.nextToken()); //뽑아낼 수의 개수
 
-		int[] find = new int[M];
+		int[] find = new int[M]; //뽑아낼 숫자
 
 		//큐 초기화 작업
 		for (int i = 1; i <= N; i++) {
@@ -28,7 +33,7 @@ public class Main {
 			find[i] = Integer.parseInt(st.nextToken());
 		}
 
-		int count = 0;
+		int count = 0; //2, 3번 연산 횟수
 		for (int i = 0; i < M; i++) {
 			//큐의 첫 번째 요소가 뽑으려는 수이면 제거
 			if (queue.peek() == find[i]) {
