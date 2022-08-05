@@ -1,4 +1,4 @@
-package baekjoon1021번;
+package baekjoon1021;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,7 +22,7 @@ public class Main {
 			queue.add(i);
 		}
 		
-		//찾을 인덱스 번호 입력아 nums에 넣기
+		//찾을 값 입력아 nums에 넣기
 		for(int i = 0; i<M; i++)
 		{
 			nums.add(sc.nextInt());
