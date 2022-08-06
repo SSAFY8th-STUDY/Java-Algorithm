@@ -10,6 +10,7 @@ public class Main {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int A = Integer.parseInt(br.readLine());
+		Stack<Integer> input = new Stack<>();
 		Stack<Integer> tmp = new Stack<>();
 		Stack<Integer> answer = new Stack<>();
 		
@@ -26,24 +27,22 @@ public class Main {
 		{
 			int current = input.pop();
 			
-			while(!tmp.isEmpty())
+			while(!tmp.isEmpty()&&current>=tmp.peek())
 			{
-				int pop = tmp.pop();
+				tmp.pop();
 				
-				if(current<pop)
-				{
-					answer.add(pop);
-					tmp.add(pop);
-					tmp.add(current);
-					break;
-				}
-				
-				if(tmp.isEmpty())
-				{
-					answer.add(-1);
-					tmp.add(current);
-					break;
-				}
+			}
+			
+			if(tmp.isEmpty())
+			{
+				answer.add(-1);
+				tmp.add(current);
+			}
+			else
+			{
+				answer.add(tmp.peek());
+				tmp.add(tmp.peek());
+				tmp.add(current);
 			}
 		}
 		
