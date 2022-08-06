@@ -19,7 +19,6 @@ public class 단지번호붙이기_2667 {
 	static boolean[][] check;
 	static int N;
 	
-	
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		// TODO Auto-generated method stub
 		//System.setIn(new FileInputStream("input.txt"));
