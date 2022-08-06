@@ -29,13 +29,13 @@ class Abs implements Comparable<Abs>
 		}
 		else if (this.abs==o.abs)//절대값이 같으면
 		{
-			if(this.original>=o.original)//원본값 비교
+			if(this.original<o.original)//원본값 비교
 			{
-				return 1;
+				return -1;
 			}
 			else
 			{
-				return -1;
+				return 1;
 			}
 		}
 		else if (this.abs>o.abs)//절대값이 더 크면
