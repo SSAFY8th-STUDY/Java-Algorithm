@@ -17,28 +17,29 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
 		
-		Stack<Character> stack = new Stack<>();
+		Stack<Character> stack = new Stack<>(); //여는 괄호를 저장할 스택
 		loop: for(int i=0; i<T; i++) {
 			char[] ps = br.readLine().toCharArray();
 			
-			if(ps.length%2 != 0) {
+			if(ps.length%2 != 0) { //입력받은 괄호가 홀수일 경우 NO 출력
 				System.out.println("NO");
 				continue;
 				
 			} else {
 				for(int j=0; j<ps.length; j++) {
-					if(ps[j] == '(')
+					if(ps[j] == '(') //여는 괄호일 경우 스택에 저장
 						stack.push(ps[j]);
 					else {
-						if(stack.isEmpty()) {
+						if(stack.isEmpty()) { //스택이 비었다면 NO 출력
 							System.out.println("NO");
 							continue loop;
 						}
-						
+						//스택에는 여는 괄호만 있기때문에 굳이 비교할 필요 없음
 						stack.pop();
 					}
 				}
 				
+				//모든 여는 괄호를 사용했으면 YES출력 아닐 경우 NO 출력
 				if(stack.isEmpty())
 					System.out.println("YES");
 				else

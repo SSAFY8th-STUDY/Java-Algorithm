@@ -25,13 +25,11 @@ public class Main {
 		while(st.hasMoreTokens())
 			nums.push(Integer.parseInt(st.nextToken()));
 		
-		int size = nums.size();
-		
 		//맨 오른쪽 처리
 		temp.push(nums.pop());
 		nge.push(-1);
 		
-		for(int i=1; i<size; i++) {
+		for(int i=1; i<N; i++) {
 			int ai = nums.pop(); //Ai번째 숫자
 			
 			while(!temp.isEmpty()) { //비교할 숫자가 있는동안
