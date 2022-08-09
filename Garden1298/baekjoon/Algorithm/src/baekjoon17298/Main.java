@@ -13,6 +13,7 @@ public class Main {
 		int A = Integer.parseInt(br.readLine());
 		Stack<Integer> input = new Stack<>();
 		Stack<Integer> tmp = new Stack<>();
+		Stack<Integer> answer = new Stack<>();
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for(int i = 0; i<A; i++)
@@ -20,7 +21,7 @@ public class Main {
 			input.add(Integer.parseInt(st.nextToken()));
 		}
 		
-		sb.append(" 1-");
+		answer.add(-1);
 		tmp.add(input.pop());
 		
 		for(int i = 1; i < A; i++)
@@ -34,17 +35,22 @@ public class Main {
 			
 			if(tmp.isEmpty())
 			{
-				sb.append(" 1-");
+				answer.add(-1);
 				tmp.add(current);
 			}
 			else
 			{
-				sb.append(" "+tmp.peek());
+				answer.add(tmp.peek());
 				tmp.add(tmp.peek());
 				tmp.add(current);
 			}
 		}
 		
-		System.out.println(sb.reverse().toString());
+		while(!answer.isEmpty())
+		{
+			sb.append(answer.pop()+" ");
+		}
+		
+		System.out.println(sb);
 	}
 }
