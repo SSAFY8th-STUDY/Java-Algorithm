@@ -852,3 +852,6 @@ FodyWeavers.xsd
 
 # End of 
 https://www.toptal.com/developers/gitignore/api/macos,visualstudio,visualstudiocode,intellij,eclipse,java,python
+
+#Remove input.txt
+input.txt
