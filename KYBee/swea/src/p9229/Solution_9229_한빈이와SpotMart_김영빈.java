@@ -3,7 +3,7 @@ package p9229;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Solution_9229_한빈이와SpotMart_김영빈 {
 
     static int TC;
     static int N, M;
@@ -12,8 +12,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        System.setIn(new FileInputStream("src/p9229/sample_input.txt"));
+        //System.setIn(new FileInputStream("src/p9229/sample_input.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
         TC = Integer.parseInt(br.readLine());
@@ -30,21 +31,22 @@ public class Main {
             }
 
             Arrays.sort(weights);
-            int front = 0, end = 0;
-            answer = 0;
+            int front = 0, end = weights.length - 1;
+            answer = -1;
+
             while (front < end) {
                 int tempWeight = weights[front] + weights[end];
-                if (answer < tempWeight && tempWeight <= M) {
-                    answer = tempWeight;
+                if (tempWeight <= M) {
+                    answer = Math.max(answer, tempWeight);
                     front++;
                 } else if (tempWeight > M) {
                     end--;
                 }
             }
+
+            sb.append("#" + tc + " ").append(answer).append("\n");
         }
 
-        System.out.println(answer);
-
+        System.out.println(sb);
     }
-
 }
