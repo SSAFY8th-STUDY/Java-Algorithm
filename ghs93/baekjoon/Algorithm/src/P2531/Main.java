@@ -43,12 +43,11 @@ public class Main {
 			int next = choBab[(i+k) % n]; //넣을 값
 			
 			cb[previous]--;
-			cb[next]++;
-			
 			if(cb[previous] == 0) { //제거한 위치의 접시가 없으면 수량 감소
 				count--;
 			}
 			
+			cb[next]++;
 			if(cb[next] == 1) { //더한 위치의 접시가 새로 추가된 거면 수량 증가
 				count++;
 			}
