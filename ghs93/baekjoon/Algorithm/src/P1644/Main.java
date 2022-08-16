@@ -18,25 +18,26 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		N = Integer.parseInt(br.readLine()); // 연속된 소수의 합
-		getPrimeSum();
+		getPrimeSum(); // 소수 구하기
 		
-		int r = 0, l = 0;
+		int r = 0, l = 0; //투 포인터
 		int count = 0, sum = 0;
 		int size = arr.size();
 		
-		while(r < size) {
-			if(sum > N) {
+		while(r < size) { //오른쪽 포인터가 끝에 도달할 때 까지
+			if(sum > N) { //누적합이 N보다 클 경우 왼쪽 값 빼고 포인터 옮기기
 				sum -= arr.get(l++);
 				
-			} else if(sum < N) {
+			} else if(sum < N) { //누적합이 N보다 작을 경우 오른쪽 값 더하고 포인터 옮기기
 				sum += arr.get(r++);
 				
-			} else {
+			} else { //누적합과 N이 같을 경우 count 증가 후 왼쪽 값 빼고 포인터 옮기기
 				count++;
 				sum -= arr.get(l++);
 			}
 		}
 		
+		//마지막 소수의 값이 N과 같을 경우 count 증가 && size > 0 => 1일 경우
 		if(size > 0 && arr.get(--r) == N)
 			count++;
 		
