@@ -14,67 +14,52 @@ import java.util.StringTokenizer;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
 		int N = Integer.parseInt(br.readLine());
 
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		int[] students = new int[N];
-		int standard = 0;
 		for (int i = 0; i < N; i++) {
 			students[i] = Integer.parseInt(st.nextToken());
-
-			if (students[i] < 0)
-				standard++;
 		}
 
 		Arrays.sort(students);
-		int count = 0;
+		long count = 0;
 
-		for (int i = 0; i < standard; i++) {
-			int sp = standard;
-			int ep = N - 1;
-			int min = students[i];
+		for (int std = 0; std < N - 2; std++) {
+			if (students[std] > 0)
+				break;
 
-			for (int j = 0; j < N - standard - 1; j++) {
-				int max = students[sp] + students[ep];
-				if (max + min > 0)
-					ep--;
-				else if (max + min < 0)
-					sp++;
-				else {
-					count++;
-					if (students[sp] == students[sp + 1]) {
-						sp++;
-					} else if (students[ep] == students[ep - 1]) {
-						ep++;
+			int l = std + 1;
+			int r = N - 1;
+
+			while (l < r) {
+				int sum = students[std] + students[l] + students[r];
+
+				if (sum == 0) {
+					int lSame = 1, rSame = 1;
+
+					if (students[l] == students[r]) {
+						int d = r - l + 1;
+						count += d * (d - 1) / 2;
+						break;
+
 					} else {
-						sp++;
+						while (l + lSame < r && students[l + lSame] == students[l])
+							lSame++;
+
+						while (r - rSame > l && students[r - rSame] == students[r])
+							rSame++;
+
+						count += lSame * rSame;
+						l += lSame - 1;
+						r -= rSame - 1;
 					}
 				}
-			}
-		}
 
-		for (int i = standard; i < N; i++) {
-			int sp = standard - 1;
-			int ep = 0;
-			int min = students[i];
-
-			for (int j = 0; j < standard; j++) {
-				int max = students[sp] + students[ep];
-				if (max + min < 0)
-					ep++;
-				else if (max + min > 0)
-					sp--;
-				else {
-					count++;
-					if (students[sp] == students[sp + 1]) {
-						sp--;
-					} else if (students[ep] == students[ep - 1]) {
-						ep++;
-					} else {
-						sp--;
-					}
-				}
+				if (sum <= 0)
+					l++;
+				else
+					r--;
 			}
 		}
 
