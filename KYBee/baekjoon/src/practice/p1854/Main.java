@@ -4,19 +4,15 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-
-    static final int INF = Integer.MAX_VALUE;
     static int N, M, K;
-    static PriorityQueue<Edge>[] dest;
+    static PriorityQueue<Integer>[] dest;
     static ArrayList<Edge>[] graph;
 
-    static int[] path;
-
     public static void main(String[] args) throws Exception {
-
         System.setIn(new FileInputStream("src/practice/p1854/input.txt"));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
@@ -25,11 +21,8 @@ public class Main {
         dest = new PriorityQueue[N + 1];
         graph = new ArrayList[N + 1];
 
-        path = new int[N + 1];
-        Arrays.fill(path, INF);
-
         for (int i = 1; i <= N; i++) {
-            dest[i] = new PriorityQueue<>();
+            dest[i] = new PriorityQueue<>(Comparator.reverseOrder());
             graph[i] = new ArrayList<>();
         }
 
@@ -42,25 +35,29 @@ public class Main {
         }
 
         findPath(1);
-        
-        System.out.println(Arrays.toString(path));
+
+        for (int i = 1; i <= N ; i++) {
+            if (dest[i].size() < K) {
+                sb.append("-1\n");
+            } else {
+                sb.append(dest[i].peek()).append("\n");
+            }
+        }
+        System.out.print(sb);
     }
 
     public static void findPath(int root) {
         PriorityQueue<Edge> pq = new PriorityQueue<>();
-        path[root] = 0;
+        dest[root].add(0);
         pq.add(new Edge(root, 0));
 
         while (!pq.isEmpty()) {
             Edge current = pq.poll();
-
-            if (current.weight > path[current.to]) continue;
-
             for (Edge next: graph[current.to]) {
-                int cost = current.weight + next.weight;
-                if (cost < path[next.to]) {
-                    path[next.to] = cost;
-                    pq.add(new Edge(next.to, cost));
+                if (dest[next.to].size() < K || dest[next.to].peek() > current.weight + next.weight) {
+                    if (dest[next.to].size() == K) dest[next.to].poll();
+                    dest[next.to].add(current.weight + next.weight);
+                    pq.add(new Edge(next.to, current.weight + next.weight));
                 }
             }
         }
@@ -78,6 +75,6 @@ class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge e) {
-        return e.weight - this.weight;
+        return this.weight - e.weight;
     }
 }
