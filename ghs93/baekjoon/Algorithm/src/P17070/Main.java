@@ -2,10 +2,7 @@ package P17070;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 /**
@@ -36,19 +33,22 @@ public class Main {
 			}
 		}
 		
-		System.out.println(move());
+		if(home[N-1][N-1] == 1)
+			System.out.println(0);
+		else
+			System.out.println(move());
 	}
 
 	private static int move() {
 		int count = 0;
-		Queue<int[]> q = new LinkedList<>();
-		q.offer(new int[] {0, 1, 1});
+		PriorityQueue<Integer[]> q = new PriorityQueue<>((a, b) -> {return a[0] - b[0];});
+		q.offer(new Integer[] {0, 1, 1});
 		boolean isMove = true;
 		int r = 0;
 		int c = 0;
 		
 		while(!q.isEmpty()) {
-			int[] p = q.poll();
+			Integer[] p = q.poll();
 			if(p[0] == N-1 && p[1] == N-1) {
 				count++;
 				continue;
@@ -69,8 +69,8 @@ public class Main {
 					}
 				}
 				
-				if(isMove)
-					q.offer(new int[] {r, c, ndd[d][i]});
+				if(isMove && !q.contains(new Integer[] {r, c, ndd[d][i]}))
+					q.offer(new Integer[] {r, c, ndd[d][i]});
 			}
 		}
 		
