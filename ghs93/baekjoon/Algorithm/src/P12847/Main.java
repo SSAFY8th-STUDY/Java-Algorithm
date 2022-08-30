@@ -13,11 +13,12 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
 		
-		long[] pays = new long[n];
-		long pay = 0l;
+		int n = Integer.parseInt(st.nextToken()); //월세 전까지의 근무일
+		int m = Integer.parseInt(st.nextToken()); //일 할 수 있는 날
+		
+		long[] pays = new long[n]; //전체 일급
+		long pay = 0l; //근무 가능한 일 수의 일급 합
 		st = new StringTokenizer(br.readLine());
 		
 		for(int i=0; i<n; i++) {
@@ -29,9 +30,11 @@ public class Main {
 		
 		long max = pay;
 		for(int i=0; i<n-m; i++) {
+			//슬라이딩 윈도우
 			pay -= pays[i];
 			pay += pays[i+m];
 			
+			//최대 이익
 			if(max < pay)
 				max = pay;
 		}

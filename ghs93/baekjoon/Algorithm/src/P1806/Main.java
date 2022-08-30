@@ -17,7 +17,7 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken()); //수열
 		int S = Integer.parseInt(st.nextToken()); //부분합
 
-		int[] arr = new int[N + 1];
+		int[] arr = new int[N + 1]; //누적합을 담을 배열
 		int sum = 0, sPosition = 0; //sPosition: 누적합 투포인터 끝 부분
 		st = new StringTokenizer(br.readLine());
 		for (int i = 1; i <= N; i++) {
