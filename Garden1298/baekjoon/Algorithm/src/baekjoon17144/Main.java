@@ -127,8 +127,10 @@ public class Main {
 
 		for(int i = 0; i<dustList.size(); i++)
 		{
-			dustList.get(i).addDust(dustMap[dustList.get(i).posX][dustList.get(i).posY]);
-			dustMap[dustList.get(i).posX][dustList.get(i).posY] = dustList.get(i).Value;
+			Dust dust = dustList.get(i);
+			
+			dustList.get(i).addDust(dustMap[dust.posX][dust.posY]);
+			dustMap[dust.posX][dust.posY] = dust.Value;
 		}
 		
 		rotate(true, dustMap, directionPurifierUp, 0, 0, purifierUp.posX);
