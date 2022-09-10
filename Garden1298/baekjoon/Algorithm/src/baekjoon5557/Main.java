@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-
 public class Main {
 
 	static int N;// 숫자의 개수 N이 주어진다. (3 ≤ N ≤ 100)
@@ -74,7 +73,6 @@ public class Main {
 		memoization += comb(index+1,sum+nums[index]);
 		isVisited[index] = false;
 		memoization += comb(index+1,sum-nums[index]);
-		
 		
 		return memo[index][sum] = memoization;
 	}
