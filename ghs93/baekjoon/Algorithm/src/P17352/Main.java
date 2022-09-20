@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 /**
  * 백준 17352. 여러분의 다리가 되어 드리겠습니다! - 골드 5
  * @author hoseong
- * @category 그리디, 분리 집합
+ * @category 분리 집합
  */
 public class Main {
 	static int N, parents[];
