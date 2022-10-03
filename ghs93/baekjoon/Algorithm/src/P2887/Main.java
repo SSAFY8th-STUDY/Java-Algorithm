@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 /**
- * 백준 2887. 행성 터널- 골드 4
+ * 백준 2887. 행성 터널- 플래티넘 5
  * 
  * @author hoseong
  * @category MST
@@ -25,7 +25,7 @@ public class Main {
 		}
 	}
 	
-	static class Tunnel implements Comparable<Tunnel>{
+	static class Tunnel implements Comparable<Tunnel> {
 		int from, to, weight;
 	
 		public Tunnel(int from, int to, int weight) {

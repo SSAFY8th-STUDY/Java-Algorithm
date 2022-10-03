@@ -11,8 +11,8 @@ import java.util.StringTokenizer;
  * @category 백트래킹
  */
 public class Main {
-	static int N, R, map[][], lc[][];
-	static ArrayList<int[]> location;
+	static int N, map[][], max;
+	static ArrayList<int[]> whiteLocation, blackLocation;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,74 +20,76 @@ public class Main {
 		
 		N = Integer.parseInt(br.readLine());
 		map = new int[N][N];
-		location = new ArrayList<>();
+		whiteLocation = new ArrayList<>(); //흰색 체스판 영역
+		blackLocation = new ArrayList<>(); //검은색 체스판 영역
 		
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
 				int n = Integer.parseInt(st.nextToken());
-				map[i][j] = n;
 				
-				if(n == 1)
-					location.add(new int[] {i, j});
+				if(n==1) { //비숍을 놓을 수 있는 영역
+					if((i+j) % 2 == 0) { //흰색 영역
+						whiteLocation.add(new int[] {i, j});
+						
+					} else { //검은색 영역
+						blackLocation.add(new int[] {i, j});
+					}
+				}
 			}
 		}
 		
-		for(int i=location.size(); i>0; i--) {
-			R = i;
-			lc = new int[R][2];
+		max = Integer.MIN_VALUE;
+		subset(0, 0, whiteLocation.size(), whiteLocation);
+		int wResult = max;
 
-			if(comb(0, 0)) {
-				System.out.println(i);
-				break;
-			}
-		}
+		max = Integer.MIN_VALUE;
+		subset(0, 0, blackLocation.size(), blackLocation);
+		int bResult = max;
+		
+		System.out.println(wResult + bResult);
 	}
-
-	static boolean comb(int cnt, int start) {
-		if(cnt == R) {
-			return check();
+	
+	//부분집합을 이용하여 비숍을 놓았을 때와 안놓았을 때 가능한 경우의 수 구하기
+	static void subset(int cnt, int idx, int size, ArrayList<int[]> location) {
+		if(idx == size) {
+			max = Math.max(max, cnt);
+			return;
 		}
 		
-		for(int i=start; i<location.size(); i++) {
-			lc[cnt] = location.get(i);
-			
-			if(comb(cnt+1, i+1))
-				return true;
+		int[] m = location.get(idx);
+		
+		// 비숍을 놓았을 경우 바로 겹치는 부분이 있나 검사
+		map[m[0]][m[1]] = 1;
+		if(check(location)) { // 겹치는 부분이 없을 경우 다음 부분집합 진행
+			subset(cnt+1, idx+1, size, location);
 		}
 		
-		return false;
+		map[m[0]][m[1]] = 0;
+		subset(cnt, idx+1, size, location);
+		
+		return;
 	}
 	
 	static int[][] dir = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-	static boolean check() {
-		int[][] temp = new int[N][N];
-		for (int i = 0; i < N; i++) {
-			temp[i] = map[i].clone();
-		}
-		
-		for (int i = 0; i < R; i++) {
-			int[] m = lc[i];
-			temp[m[0]][m[1]] = 2;
-		}
-		
-		for (int i = 0; i < R; i++) {
-			int[] m = lc[i];
+	static boolean check(ArrayList<int[]> location) {
+		for (int i = 0, size = location.size(); i < size; i++) {
+			int[] m = location.get(i);
 			
-			for (int d = 0; d < 4; d++) {
-				int r = m[0];
-				int c = m[1];
-				while(true) {
-					r += dir[d][0];
-					c += dir[d][1];
+			if(map[m[0]][m[1]] == 1) {
+				for (int j = 0; j < 4; j++) {
+					int r = m[0];
+					int c = m[1];
 					
-					if(r>=0 && r<N && c>=0 && c<N) {
-						if(temp[r][c] == 2) {
-							return false;
-						}
+					while(true) {
+						r += dir[j][0];
+						c += dir[j][1];
 						
-					} else {
-						break;
+						if(r < 0 || r >= N || c < 0 || c >= N)
+							break;
+						
+						if(map[r][c] == 1)
+							return false;
 					}
 				}
 			}
